@@ -27,7 +27,7 @@ import me.dio.carrinho.enumeration.FormaPagamento;
 public class Sacola {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

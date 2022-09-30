@@ -1,6 +1,7 @@
 package me.dio.carrinho.service.impl;
 
 import java.util.List;
+import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import me.dio.carrinho.enumeration.FormaPagamento;
 import me.dio.carrinho.model.Item;
@@ -13,6 +14,7 @@ import me.dio.carrinho.resource.dto.ItemDto;
 import me.dio.carrinho.service.SacolaService;
 
 @RequiredArgsConstructor
+@Service
 public class SacolaServiceImpl implements SacolaService {
 	
 	private final SacolaRepository sacolaRepository;

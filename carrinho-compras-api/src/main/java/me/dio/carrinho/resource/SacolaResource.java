@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import me.dio.carrinho.model.Item;
 import me.dio.carrinho.model.Sacola;
 import me.dio.carrinho.resource.dto.ItemDto;
 import me.dio.carrinho.service.SacolaService;
 
+@Api(value = "/ifood-devweek/sacolas")
 @RestController
 @RequestMapping("/ifood-devweek/sacolas")
 @RequiredArgsConstructor

@@ -1,13 +1,15 @@
 package me.dio.carrinho.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
+
 import lombok.RequiredArgsConstructor;
 import me.dio.carrinho.enumeration.FormaPagamento;
 import me.dio.carrinho.model.Item;
 import me.dio.carrinho.model.Restaurante;
 import me.dio.carrinho.model.Sacola;
-import me.dio.carrinho.repository.ItemRepository;
 import me.dio.carrinho.repository.ProdutoRepository;
 import me.dio.carrinho.repository.SacolaRepository;
 import me.dio.carrinho.resource.dto.ItemDto;
@@ -19,7 +21,6 @@ public class SacolaServiceImpl implements SacolaService {
 	
 	private final SacolaRepository sacolaRepository;
 	private final ProdutoRepository produtoRepository;
-	private final ItemRepository itemRepository;
 	
 	@Override
 	public Item adicionarItemNaSacola(ItemDto itemDto) {
@@ -59,9 +60,22 @@ public class SacolaServiceImpl implements SacolaService {
 			}
 		}
 		
-		//Salvar no banco de dados a sacola alterada e o item que foi adicionado
-		sacolaRepository.save(sacola);
-		return itemRepository.save(itemASerInserido);
+        List<Double> valorDosItem = new ArrayList<>();
+
+        for(Item itemDaSacola: itensDaSacola) {
+            double valorTotal = itemDaSacola.getProduto().getValorUnitario() * itemDaSacola.getQuantidade();
+            valorDosItem.add(valorTotal);
+        }
+
+        Double valorTotalSacola = 0.0;
+
+        for(Double valorItem: valorDosItem) {
+            valorTotalSacola +=  valorItem;
+        }
+
+        sacola.setValorTotal(valorTotalSacola);
+        sacolaRepository.save(sacola);
+        return itemASerInserido;
 	}
 
 	@Override
@@ -78,7 +92,7 @@ public class SacolaServiceImpl implements SacolaService {
 		Sacola sacola = verSacola(id);
 		
 		if(sacola.getItens().isEmpty()) {
-			throw new RuntimeException("Adiciona ítens na sacola!");
+			throw new RuntimeException("Adicione ítens na sacola!");
 		}
 		
 		FormaPagamento formaPagamento =
